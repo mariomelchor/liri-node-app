@@ -30,7 +30,7 @@ if ( task === 'movie-this') {
 
       // If no movie is passed show this movie
       if ( movie.Title === 'Mr. Nobody' ) {
-        console.log( 'If you havent watched Mr. Nobody, then you should: http://www.imdb.com/title/tt0485947/ Its on Netflix!');
+        console.log( "If you haven't watched Mr. Nobody, then you should: http://www.imdb.com/title/tt0485947/ It's on Netflix!" );
         console.log( '' );
       }
 
