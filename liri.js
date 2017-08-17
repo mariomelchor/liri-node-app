@@ -11,7 +11,7 @@ if ( task === 'movie-this') {
   var omdbapi = 'http://www.omdbapi.com/?apikey=' + omdbapikey;
 
   var movieTitle = process.argv[3];
-  var requestUrl = omdbapi + '&t=' + movieTitle;
+  var requestUrl = omdbapi + '&type=movie&plot=short&t=' + movieTitle;
 
   // console.log( omdbapi );
   // console.log( requestUrl );
