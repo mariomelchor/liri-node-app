@@ -6,8 +6,6 @@ var task = process.argv[2];
 var client = keys.twitterKeys;
 var spot = keys.spotifyKeys;
 
-console.log(spot);
-
 // Twitter
 // node liri.js my-tweets
 if ( task === 'my-tweets') {
@@ -83,4 +81,11 @@ if ( task === 'movie-this') {
     }
 
   });
+}
+
+// Spotify This Song
+// node liri.js spotify-this-song '<song name here>'
+if ( task === 'spotify-this-song') {
+  var songTitle = process.argv[3] || 'The Sign';
+  console.log( songTitle );
 }
