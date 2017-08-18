@@ -87,5 +87,26 @@ if ( task === 'movie-this') {
 // node liri.js spotify-this-song '<song name here>'
 if ( task === 'spotify-this-song') {
   var songTitle = process.argv[3] || 'The Sign';
-  console.log( songTitle );
+
+  spot.search({ type: 'track', query: songTitle }, function(err, data) {
+    if (err) {
+      return console.log('Error occurred: ' + err);
+    }
+
+  var tracks = data.tracks.items[0];
+
+  console.log( '******************************************************************************************************************' );
+  console.log( '******************************************       Spotify       ************************************************' );
+  console.log( '' );
+
+  console.log( 'SONG INFORMATION' );
+  console.log( 'Song Title: ' + tracks.name);
+  console.log( 'Artist: ' + tracks.album.artists[0].name );
+  console.log( 'Preview Link: ' + tracks.artists[0].external_urls.spotify );
+  console.log( 'Album: ' + tracks.album.name );
+  console.log( '' );
+  console.log( '******************************************************************************************************************' );
+
+  });
+
 }
