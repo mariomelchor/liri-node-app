@@ -4,6 +4,9 @@ var keys = require('./keys.js');
 var dateFormat = require('dateformat');
 var task = process.argv[2];
 var client = keys.twitterKeys;
+var spot = keys.spotifyKeys;
+
+console.log(spot);
 
 // Twitter
 // node liri.js my-tweets
