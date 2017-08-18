@@ -4,14 +4,26 @@ var keys = require('./keys.js');
 var task = process.argv[2];
 var client = keys.twitterKeys;
 
+var dateFormat = require('dateformat');
+
 client.get('statuses/user_timeline.json', { screen_name: 'mariomelchor', count: 20 }, function(error, tweets, response) {
   if(error) throw error;
-  console.log(tweets);  // The favorites.
+  // console.log(tweets);  // The favorites.
   // console.log(response);  // Raw response object.
 
+  console.log( '******************************************************************************************************************' );
+  console.log( '******************************************        Twitter         ************************************************' );
+  console.log( '' );
 
+  // Loop through tweets
   for (var i = 0; i < tweets.length; i++) {
-    console.log(tweets[i].created_at);
+    console.log( ' Posted by : ' + tweets[i].user.name + ' | @' + tweets[i].user.screen_name );
+    console.log( '' );
+    console.log( ' ' + tweets[i].text );
+    console.log( ' - Posted on: ' + dateFormat( tweets[i].created_at, 'mmmm dS, yyyy') + ' | Location : ' + tweets[i].user.location  );
+    console.log( '' );
+    console.log( '-----------------------------------------------------------------------------------------------------------------' );
+    console.log( '' );
   }
 
 });
