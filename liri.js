@@ -1,13 +1,21 @@
 // Load Required files
-var twitter = require('./keys.js');
 var request = require('request');
-
+var keys = require('./keys.js');
 var task = process.argv[2];
+var client = keys.twitterKeys;
+
+client.get('favorites/list.json?count=2&screen_name=episod', function(error, tweets, response) {
+  if(error) throw error;
+  console.log(tweets);  // The favorites.
+  console.log(response);  // Raw response object.
+});
+
+console.log(client);
 
 // Movie This
 // node liri.js movie-this '<movie name here>'
 if ( task === 'movie-this') {
-  var omdbapikey = '40e9cece';
+  var omdbapikey = process.env.OMDB_API_KEY;
   var omdbapi = 'http://www.omdbapi.com/?apikey=' + omdbapikey;
 
   var movieTitle = process.argv[3] || 'Mr. Nobody';
