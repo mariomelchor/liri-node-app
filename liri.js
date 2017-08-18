@@ -4,13 +4,17 @@ var keys = require('./keys.js');
 var task = process.argv[2];
 var client = keys.twitterKeys;
 
-client.get('favorites/list.json?count=2&screen_name=episod', function(error, tweets, response) {
+client.get('statuses/user_timeline.json', { screen_name: 'mariomelchor', count: 20 }, function(error, tweets, response) {
   if(error) throw error;
   console.log(tweets);  // The favorites.
-  console.log(response);  // Raw response object.
-});
+  // console.log(response);  // Raw response object.
 
-console.log(client);
+
+  for (var i = 0; i < tweets.length; i++) {
+    console.log(tweets[i].created_at);
+  }
+
+});
 
 // Movie This
 // node liri.js movie-this '<movie name here>'

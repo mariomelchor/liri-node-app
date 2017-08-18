@@ -1,5 +1,3 @@
-console.log('Keys.js loaded');
-
 var Twitter = require('twitter');
 
 exports.twitterKeys = new Twitter({
