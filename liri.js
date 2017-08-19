@@ -2,6 +2,7 @@
 var request = require('request');
 var keys = require('./keys.js');
 var dateFormat = require('dateformat');
+var fs = require('fs');
 var task = process.argv[2];
 var client = keys.twitterKeys;
 var spot = keys.spotifyKeys;
@@ -90,6 +91,31 @@ if ( task === 'movie-this') {
 if ( task === 'spotify-this-song') {
   var songTitle = process.argv[3] || 'track:The+Sign+artist:Ace+of+Base';
 
+  // Run searchSpotify function
+  searchSpotify(songTitle);
+
+}
+
+// Do What It Says
+//node liri.js do-what-it-says
+if ( task === 'do-what-it-says') {
+
+  fs.readFile('random.txt', 'utf8', function(error, data) {
+
+    // If there is an error show message
+    if (error) {
+      return console.log(error);
+    }
+
+    // Run searchSpotify function
+    searchSpotify(data);
+
+  });
+}
+
+
+// Function to search a spotify song
+function searchSpotify(songTitle) {
   spot.search({ type: 'track', query: songTitle }, function(err, data) {
     if (err) {
       return console.log('Error occurred: ' + err);
@@ -112,5 +138,4 @@ if ( task === 'spotify-this-song') {
     console.log( '******************************************************************************************************************' );
 
   });
-
 }
