@@ -12,6 +12,7 @@ if ( task === 'my-tweets') {
   client.get('statuses/user_timeline.json', { screen_name: 'mariomelchor', count: 20 }, function(error, tweets, response) {
     if(error) throw error;
 
+    console.log( '' );
     console.log( '******************************************************************************************************************' );
     console.log( '******************************************        Twitter         ************************************************' );
     console.log( '' );
@@ -50,6 +51,7 @@ if ( task === 'movie-this') {
     // If there is a Movie show movie data
     if ( movie.Response === 'True' ) {
 
+      console.log( '' );
       console.log( '******************************************************************************************************************' );
       console.log( '******************************************       MOVIE THIS       ************************************************' );
       console.log( '' );
