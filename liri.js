@@ -7,9 +7,29 @@ var task = process.argv[2];
 var client = keys.twitterKeys;
 var spot = keys.spotifyKeys;
 
+// The switch-case will direct which function gets run.
+switch (task) {
+  case 'my-tweets':
+    myTweets();
+    break;
+
+  case 'movie-this':
+    movieThis();
+    break;
+
+  case 'spotify-this-song':
+    var songTitle = process.argv[3] || 'track:The+Sign+artist:Ace+of+Base';
+    searchSpotify(songTitle)
+    break;
+
+  case 'do-what-it-says':
+    doWhatItSays();
+    break;
+}
+
 // Twitter
 // node liri.js my-tweets
-if ( task === 'my-tweets') {
+function myTweets() {
   client.get('statuses/user_timeline.json', { screen_name: 'mariomelchor', count: 20 }, function(error, tweets, response) {
     if(error) throw error;
 
@@ -34,7 +54,7 @@ if ( task === 'my-tweets') {
 
 // Movie This
 // node liri.js movie-this '<movie name here>'
-if ( task === 'movie-this') {
+function movieThis() {
   var omdbapikey = process.env.OMDB_API_KEY;
   var omdbapi = 'http://www.omdbapi.com/?apikey=' + omdbapikey;
 
@@ -86,19 +106,9 @@ if ( task === 'movie-this') {
   });
 }
 
-// Spotify This Song
-// node liri.js spotify-this-song '<song name here>'
-if ( task === 'spotify-this-song') {
-  var songTitle = process.argv[3] || 'track:The+Sign+artist:Ace+of+Base';
-
-  // Run searchSpotify function
-  searchSpotify(songTitle);
-
-}
-
 // Do What It Says
 //node liri.js do-what-it-says
-if ( task === 'do-what-it-says') {
+function doWhatItSays() {
 
   fs.readFile('random.txt', 'utf8', function(error, data) {
 
@@ -107,14 +117,19 @@ if ( task === 'do-what-it-says') {
       return console.log(error);
     }
 
-    // Run searchSpotify function
-    searchSpotify(data);
+    // Split items in text file by comma place in array
+    var textArray = data.split(',');
+
+    if ( textArray[0] === 'spotify-this-song' ) {
+      // Run searchSpotify function
+      searchSpotify(textArray[1]);
+    }
 
   });
 }
 
-
-// Function to search a spotify song
+// Spotify This Song
+// node liri.js spotify-this-song '<song name here>'
 function searchSpotify(songTitle) {
   spot.search({ type: 'track', query: songTitle }, function(err, data) {
     if (err) {
