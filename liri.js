@@ -33,6 +33,9 @@ function myTweets() {
   client.get('statuses/user_timeline.json', { screen_name: 'mariomelchor', count: 20 }, function(error, tweets, response) {
     if(error) throw error;
 
+    // Empty variable used to append tweet to log.txt
+    var toFile = '';
+
     console.log( '' );
     console.log( '******************************************************************************************************************' );
     console.log( '******************************************        Twitter         ************************************************' );
@@ -47,7 +50,15 @@ function myTweets() {
       console.log( '' );
       console.log( '-----------------------------------------------------------------------------------------------------------------' );
       console.log( '' );
+
+      // Apped data to toFile variable
+      toFile += 'Posted by : ' + tweets[i].user.name + ' | @' + tweets[i].user.screen_name + tweets[i].text;
+      toFile += ' - Posted on: ' + dateFormat( tweets[i].created_at, 'mmmm dS, yyyy') + ' | Location : ' + tweets[i].user.location;
+      toFile += '\n' + '******************************************************************************************************************' + '\n';
     }
+
+    // Log all data to log.txt
+    log( toFile );
 
   });
 }
@@ -98,6 +109,18 @@ function movieThis() {
       console.log( 'Actors: ' + movie.Actors );
       console.log( '' );
       console.log( '******************************************************************************************************************' );
+
+      // Log all data to log.txt
+      let toFile =
+      'Movie Title: ' + movie.Title +
+      ' Year Released: ' + movie.Year +
+      ' Country: ' + movie.Country +
+      ' Language: ' + movie.Language +
+      ' Ratings: ' + movie.Ratings[0].Source + ': ' + movie.Ratings[0].Value +  movie.Ratings[1].Source + ': ' + movie.Ratings[1].Value +
+      ' Plot: ' + movie.Plot +
+      ' Actors: ' + movie.Actors +
+      '\n' + '******************************************************************************************************************' + '\n';
+      log( toFile );
 
     } else {
       console.log( 'Movie Not Found!' );
@@ -152,5 +175,22 @@ function searchSpotify(songTitle) {
     console.log( '' );
     console.log( '******************************************************************************************************************' );
 
+    // Log all data to log.txt
+    let toFile =
+     'Song Title: ' + tracks.name +
+     ' Artist: ' + tracks.album.artists[0].name +
+     ' Preview Link: ' + tracks.artists[0].external_urls.spotify +
+     ' Album: ' + tracks.album.name +
+     '\n' + '******************************************************************************************************************' + '\n';
+   log( toFile );
+
+  });
+}
+
+// Log searches to log.txt
+function log(data){
+  fs.appendFile('log.txt', data, function(err) {
+    if (err) throw err;
+    console.log('This data was appended to log.txt');
   });
 }
