@@ -7,6 +7,17 @@ var task = process.argv[2];
 var client = keys.twitterKeys;
 var spot = keys.spotifyKeys;
 
+// Take in the command line arguments
+var nodeArgs = process.argv;
+
+// Create an empty string for holding the parameters
+var searchValue = '';
+
+// loop through parameters and concat
+for (var i = 3; i < nodeArgs.length; i++) {
+  searchValue += nodeArgs[i] + '+';
+}
+
 // The switch-case will direct which function gets run.
 switch (task) {
   case 'my-tweets':
@@ -14,12 +25,13 @@ switch (task) {
     break;
 
   case 'movie-this':
-    movieThis();
+    var movieTitle = searchValue || 'Mr.+Nobody';
+    movieThis(movieTitle);
     break;
 
   case 'spotify-this-song':
-    var songTitle = process.argv[3] || 'track:The+Sign+artist:Ace+of+Base';
-    searchSpotify(songTitle)
+    var songTitle = searchValue || 'track:The+Sign+artist:Ace+of+Base';
+    searchSpotify(songTitle);
     break;
 
   case 'do-what-it-says':
@@ -65,11 +77,10 @@ function myTweets() {
 
 // Movie This
 // node liri.js movie-this '<movie name here>'
-function movieThis() {
+function movieThis(movieTitle) {
   var omdbapikey = process.env.OMDB_API_KEY;
   var omdbapi = 'http://www.omdbapi.com/?apikey=' + omdbapikey;
 
-  var movieTitle = process.argv[3] || 'Mr. Nobody';
   var requestUrl = omdbapi + '&type=movie&plot=short&t=' + movieTitle;
 
   request(requestUrl, function (error, response, body) {
@@ -164,7 +175,7 @@ function searchSpotify(songTitle) {
 
     console.log( '' );
     console.log( '******************************************************************************************************************' );
-    console.log( '******************************************       Spotify       ************************************************' );
+    console.log( '*******************************************       Spotify       **************************************************' );
     console.log( '' );
 
     console.log( 'SONG INFORMATION' );
